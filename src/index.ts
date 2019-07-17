@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+import { get } from 'config';
 import { config } from 'dotenv';
 import * as path from 'path';
 import * as restify from 'restify';
@@ -26,8 +27,8 @@ server.listen(process.env.port || process.env.PORT || 3978, () => {
 // Create adapter.
 // See https://aka.ms/about-bot-adapter to learn more about adapters.
 const adapter = new BotFrameworkAdapter({
-  appId: process.env.MicrosoftAppID,
-  appPassword: process.env.MicrosoftAppPassword,
+  appId: get('azure.microsoft_app_id'),
+  appPassword: get('azure.microsoft_app_password'),
 });
 
 // Catch-all for errors.

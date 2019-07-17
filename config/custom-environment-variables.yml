@@ -3,3 +3,5 @@
 google:
   private_key_id: GOOGLE_KEY_ID
   decrypt_password: DECRYPT_PASSWORD
+azure:
+  microsoft_app_password: MICROSOFT_APP_PASSWORD
