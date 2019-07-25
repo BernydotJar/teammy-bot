@@ -5,3 +5,4 @@ google:
   decrypt_password: DECRYPT_PASSWORD
 azure:
   microsoft_app_password: MICROSOFT_APP_PASSWORD
+  microsoft_app_id: MICROSOFT_APP_ID

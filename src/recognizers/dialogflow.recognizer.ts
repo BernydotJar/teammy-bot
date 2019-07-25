@@ -1,10 +1,10 @@
 import { get } from 'config';
-import { DetectIntentRequest, SessionsClient } from 'dialogflow';
+import { DetectIntentRequest, DetectIntentResponse, QueryResult, SessionsClient } from 'dialogflow';
 import { v4 } from 'uuid';
 
 export class DialogFlowRecognizer {
 
-  public async recognize(message) {
+  public async recognize(message: string): Promise<QueryResult> {
 
     const projectId = 'teamy-bot-scnpuq';
     // A unique identifier for the given session
@@ -27,16 +27,10 @@ export class DialogFlowRecognizer {
     };
 
       // Send request and log result
-    const responses = await sessionClient.detectIntent(request);
+    const responses: DetectIntentResponse[] = await sessionClient.detectIntent(request);
     console.log('Detected intent');
-    const result = responses[0].queryResult;
+    const result: QueryResult = responses[0].queryResult;
     console.log(result);
-    console.log(`  Response: ${result.fulfillmentText}`);
-    if (result.intent) {
-      console.log(`  Intent: ${result.intent.displayName}`);
-    } else {
-      console.log(`  No intent matched.`);
-    }
-    return result.fulfillmentText;
+    return result;
   }
 }

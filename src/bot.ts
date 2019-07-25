@@ -2,20 +2,29 @@
 // Licensed under the MIT License.
 
 import { ActivityHandler } from 'botbuilder';
+import { AgustinController } from './controllers';
 import { DialogFlowRecognizer } from './recognizers';
 
 export class MyBot extends ActivityHandler {
+  private agustinController: AgustinController;
+
   constructor() {
     super();
-        // See https://aka.ms/about-bot-activity-message to learn more about the message and other activity types.
+    this.agustinController = new AgustinController();
+    // See https://aka.ms/about-bot-activity-message to learn more about the message and other activity types.
     this.onMessage(async (context, next): Promise <void> => {
       process.env.GOOGLE_APPLICATION_CREDENTIALS = './google.json';
       const dialogFlowRecognizer = new DialogFlowRecognizer();
       const resp = await dialogFlowRecognizer.recognize(context.activity.text);
 
-      await context.sendActivity(resp);
-            // By calling next() you ensure that the next BotHandler is run.
-
+      switch (resp.intent.displayName) {
+        case 'userRequestAgustinNickname':
+          await this.agustinController.getAgustinNickname(context);
+          break;
+        default:
+          context.sendActivity(resp.fulfillmentText);
+          break;
+      }
       await next();
     });
 
