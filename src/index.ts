@@ -8,7 +8,8 @@ import * as restify from 'restify';
 
 // Import required bot services.
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
-import { BotFrameworkAdapter } from 'botbuilder';
+import { BotFrameworkAdapter, MiddlewareSet } from 'botbuilder';
+import { SlackMiddelware } from './middelwares/slack.middelware';
 
 // This bot's main dialog.
 import { MyBot } from './bot';
@@ -38,6 +39,10 @@ adapter.onTurnError = async (context, error) => {
     // Send a message to the user
   await context.sendActivity(`Oops. Something went wrong!`);
 };
+
+// Middelware for slack mentions
+const slackMiddelware = new SlackMiddelware();
+adapter.use(slackMiddelware.isMentioned);
 
 // Create the main dialog.
 const myBot = new MyBot();
