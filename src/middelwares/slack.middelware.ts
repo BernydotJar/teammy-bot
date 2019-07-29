@@ -37,7 +37,7 @@ function isSlackMention(context): boolean {
   if (context.activity.entities[0]) {
     return (
       context.activity.entities[0].type === 'mention' &&
-      context.activity.entities[0].text ===  `@${context.activity.entities[0].mentioned.name}`
+      context.activity.entities[0].text ===  `@${context.activity.recipient.name}`
     );
   }
   return false;
