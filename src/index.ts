@@ -9,7 +9,7 @@ import * as restify from 'restify';
 // Import required bot services.
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
 import { BotFrameworkAdapter, MiddlewareSet } from 'botbuilder';
-import { SlackMiddelware } from './middelwares/slack.middelware';
+import { SlackMiddelware } from './middlewares';
 
 // This bot's main dialog.
 import { MyBot } from './bot';
@@ -25,6 +25,7 @@ server.listen(process.env.port || process.env.PORT || 3978, () => {
   console.log(`\nSee https://aka.ms/connect-to-bot for more information`);
 });
 
+server.use(restify.plugins.bodyParser());
 // Create adapter.
 // See https://aka.ms/about-bot-adapter to learn more about adapters.
 const adapter = new BotFrameworkAdapter({
