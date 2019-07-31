@@ -6,7 +6,9 @@ export class DialogFlowRecognizer {
 
   public async recognize(message: string): Promise<QueryResult> {
 
-    const projectId = 'teamy-bot-scnpuq';
+    process.env.GOOGLE_APPLICATION_CREDENTIALS = './google.json';
+
+    const projectId = get('google.project_id').toString();
     // A unique identifier for the given session
     const sessionId = v4();
       // Create a new session
@@ -28,9 +30,8 @@ export class DialogFlowRecognizer {
 
       // Send request and log result
     const responses: DetectIntentResponse[] = await sessionClient.detectIntent(request);
-    console.log('Detected intent');
     const result: QueryResult = responses[0].queryResult;
-    console.log(result);
+    // console.log(JSON.stringify(result));
     return result;
   }
 }
