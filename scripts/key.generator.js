@@ -1,10 +1,13 @@
-const rl = require('readline-sync');
+const readline = require('readline');
 const { encrypt }  = require('./encrypt.decrypt');
 const fs = require('fs');
 
-const privateKey = rl.question('Enter the entire key to encrypt: --> ');
+const getText = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
 
-fs.writeFile('securekey.txt', encrypt(privateKey), 'utf8', ()=> {
-
-});
-
+getText.question('Enter the entire key to encrypt: --> ', (privateKey) => {
+    fs.writeFile('securekey.txt', encrypt(privateKey), 'utf8', ()=> {});
+    getText.close();
+  });

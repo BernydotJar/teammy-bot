@@ -71,7 +71,7 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
 
     - Encrypt the private_key from the google json:
 
-        - copy the entire private_key from the google json
+        - copy the entire private_key from the google json: copy from "-----BEGIN PRIVATE KEY-----\n" to "\n-----END PRIVATE KEY-----\n"
 
         - run key.generator script and paste the entire private_key 
 
