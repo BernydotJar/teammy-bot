@@ -4,13 +4,18 @@ import { v4 } from 'uuid';
 
 export class DialogFlowRecognizer {
 
-  public async recognize(message: string): Promise<QueryResult> {
+  public async recognize(message: string, uuid?: string): Promise<QueryResult> {
 
     process.env.GOOGLE_APPLICATION_CREDENTIALS = './google.json';
 
     const projectId = get('google.project_id').toString();
     // A unique identifier for the given session
-    const sessionId = v4();
+    let sessionId = '';
+    if (uuid === undefined) {
+      sessionId = v4();
+    } else {
+      sessionId = uuid;
+    }
       // Create a new session
     const sessionClient = new SessionsClient();
     const sessionPath = sessionClient.sessionPath(projectId, sessionId);

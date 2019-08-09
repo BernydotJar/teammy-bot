@@ -8,3 +8,7 @@ google:
 azure:
   microsoft_app_id:
   microsoft_app_password:
+
+aws:
+  dynamoDB:
+    accessKeyId: AKIAYQXHU25AVLU2TTH3

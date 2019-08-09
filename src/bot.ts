@@ -2,25 +2,31 @@
 // Licensed under the MIT License.
 
 import { ActivityHandler } from 'botbuilder';
-import { AgustinController } from './controllers';
+import { AgustinController, SuggestionController } from './controllers';
 import { DialogFlowRecognizer } from './recognizers';
 
 export class MyBot extends ActivityHandler {
   private agustinController: AgustinController;
+  private suggestionController: SuggestionController;
 
   constructor() {
     super();
     this.agustinController = new AgustinController();
+    this.suggestionController = new SuggestionController();
     // See https://aka.ms/about-bot-activity-message to learn more about the message and other activity types.
     this.onMessage(async (context, next): Promise <void> => {
       const dialogFlowRecognizer = new DialogFlowRecognizer();
-      const resp = await dialogFlowRecognizer.recognize(context.activity.text);
+      const resp = await dialogFlowRecognizer.recognize(context.activity.text, context.activity.conversation.id);
 
       switch (resp.intent.displayName) {
         case 'userRequestAgustinNickname':
           await this.agustinController.getAgustinNickname(context);
           break;
+        case 'userRequestSuggestion':
+          await this.suggestionController.saveSuggestion(context, resp);
+          break;
         default:
+          console.log(resp);
           context.sendActivity(resp.fulfillmentText);
           break;
       }

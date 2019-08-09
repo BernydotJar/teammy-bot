@@ -13,9 +13,13 @@ import { SlackMiddelware } from './middlewares';
 
 // This bot's main dialog.
 import { MyBot } from './bot';
+import { DatabaseConfig } from './repository/config/database.config';
 
 const ENV_FILE = path.join(__dirname, '..', '.env');
 config({ path: ENV_FILE });
+
+// Create Db Tables and config
+const databaseConfig = DatabaseConfig.getDynamoDb();
 
 // Create HTTP server.
 const server = restify.createServer();
